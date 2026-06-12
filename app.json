@@ -1,19 +1,21 @@
 {
   "expo": {
-    "name": "maestro-de-obras-mobile",
+    "name": "Maestro de Obras",
     "slug": "maestro-de-obras-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "maestrodeobras",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#f0f0f0"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.qrofertas.maestrodeobras"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,10 +23,41 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.qrofertas.maestrodeobras"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-secure-store",
+      "@react-native-community/datetimepicker",
+      "expo-video",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "O Maestro de Obras usa sua localização para mostrar lojas de equipamentos e profissionais próximos a você."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O Maestro de Obras acessa suas fotos para anexar imagens às tarefas, ao diário de obra e ao seu perfil.",
+          "cameraPermission": "O Maestro de Obras usa a câmera para registrar fotos das tarefas e do diário de obra."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#1e3a5f"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f6b37682-eb5f-4e04-8d4f-0431de7c6dad"
+      }
+    },
+    "owner": "viniciusluz2"
   }
 }
