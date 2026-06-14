@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maestro de Obras — App de Gestão de Obras e Construção</title>
+  <meta name="description" content="Gerencie sua obra do início ao fim: cronograma com lembretes de prazo, equipes, materiais, contratações, diário de obra (RDO), relatórios e controle financeiro. Baixe grátis no Android." />
+  <meta name="keywords" content="gestão de obras, app de construção, cronograma de obra, diário de obra, RDO, controle financeiro de obra, gestão de equipe construção" />
+  <meta name="theme-color" content="#1A2B5E" />
+  <link rel="canonical" href="https://maestro-de-obras.com/" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Maestro de Obras" />
+  <meta property="og:title" content="Maestro de Obras — Gestão de Obras e Construção" />
+  <meta property="og:description" content="Controle sua obra do início ao fim: cronograma, equipes, materiais, RDO, relatórios e financeiro. Baixe grátis." />
+  <meta property="og:image" content="https://maestro-de-obras.com/hero.jpg" />
+  <meta property="og:url" content="https://maestro-de-obras.com/" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Maestro de Obras — Gestão de Obras e Construção" />
+  <meta name="twitter:description" content="Controle sua obra do início ao fim: cronograma, equipes, materiais, RDO, relatórios e financeiro. Baixe grátis." />
+  <meta name="twitter:image" content="https://maestro-de-obras.com/hero.jpg" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #F07000;
+      --navy: #1A2B5E;
+      --light: #FFF9F3;
+      --dark: #0F1837;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      /* Gradiente sutil na página toda, com as cores do app (creme → branco → leve navy) */
+      background: linear-gradient(180deg, #FFF7EE 0%, #FFFFFF 28%, #F6F8FC 68%, #EAEEF7 100%);
+      background-attachment: fixed;
+      color: var(--navy);
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 40px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #F0EAE2;
+    }
+
+    .navbar-logo {
+      height: 68px;
+      width: auto;
+      display: block;
+    }
+
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .navbar-links a {
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+
+    .navbar-links a:hover {
+      color: var(--primary);
+    }
+
+    .navbar-cta {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 10px 22px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(240, 112, 0, 0.2);
+    }
+
+    .navbar-cta:hover {
+      background: #D95D00;
+    }
+
+    .footer-logo {
+      height: 62px;
+      width: auto;
+      opacity: 0.9;
+      margin-bottom: 16px;
+    }
+
+    .gradient-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #D95D00 100%);
+    }
+
+    .gradient-navy {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--dark) 100%);
+    }
+
+    .hero {
+      background: transparent;
+      color: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      padding: 80px 40px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -160px;
+      right: -120px;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(240, 112, 0, 0.18) 0%, rgba(240, 112, 0, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -180px;
+      left: -140px;
+      width: 540px;
+      height: 540px;
+      background: radial-gradient(circle, rgba(26, 43, 94, 0.13) 0%, rgba(26, 43, 94, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-wrapper {
+      width: 100%;
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: 45% 55%;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-left {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(240, 112, 0, 0.08);
+      border: 1px solid rgba(240, 112, 0, 0.2);
+      border-radius: 999px;
+      padding: 8px 16px;
+      width: fit-content;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .hero-headline {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--navy);
+      margin: 0;
+    }
+
+    .hero-subheadline {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #666;
+      max-width: 500px;
+      margin: 0;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hero-button-primary {
+      background: var(--primary);
+      color: white;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(240, 112, 0, 0.15);
+    }
+
+    .hero-button-primary:hover {
+      background: #D95D00;
+      box-shadow: 0 8px 20px rgba(240, 112, 0, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .hero-button-secondary {
+      background: transparent;
+      color: var(--navy);
+      padding: 14px 32px;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .hero-button-secondary:hover {
+      border-color: var(--navy);
+      background: rgba(26, 43, 94, 0.02);
+    }
+
+    .hero-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .hero-benefit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--navy);
+      font-weight: 500;
+    }
+
+    .hero-benefit::before {
+      content: '✓';
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .hero-right {
+      position: relative;
+      height: 650px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+      background: white;
+    }
+
+    .hero-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-floating-card {
+      position: absolute;
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    .hero-floating-card-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .hero-floating-card-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .floating-card-1 {
+      bottom: 40px;
+      left: 30px;
+      width: 200px;
+    }
+
+    .floating-card-2 {
+      top: 40px;
+      right: 30px;
+      width: 200px;
+    }
+
+    .floating-card-3 {
+      bottom: 80px;
+      right: 30px;
+      width: 220px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .btn {
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 16px rgba(240, 112, 0, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #D95D00;
+      box-shadow: 0 12px 24px rgba(240, 112, 0, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--navy);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+      background: var(--light);
+      transform: translateY(-2px);
+    }
+
+    .section {
+      padding: 80px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 64px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin: 18px auto 0;
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      color: #666;
+      text-align: center;
+      margin-bottom: 60px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 36px 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+      border: 2px solid #F2ECE4;
+      border-top: 4px solid var(--primary);
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 34px;
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(240, 112, 0, 0.14), rgba(240, 112, 0, 0.04));
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .download-section {
+      background: linear-gradient(135deg, var(--light) 0%, white 100%);
+      border-radius: 24px;
+      padding: 60px 40px;
+      text-align: center;
+      margin: 0 auto;
+      max-width: 800px;
+      border: 1px solid #F2ECE4;
+      border-top: 5px solid var(--primary);
+    }
+
+    .download-section h2 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .download-section p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .store-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .store-button {
+      background: var(--navy);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
+      border: 2px solid var(--navy);
+    }
+
+    .store-button:hover {
+      background: var(--dark);
+      border-color: var(--dark);
+      transform: translateY(-2px);
+    }
+
+    .store-badge {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .store-badge img {
+      height: 66px;
+      width: auto;
+      display: block;
+    }
+
+    .store-badge:hover {
+      transform: translateY(-2px);
+    }
+
+    .partner-section {
+      background: var(--navy);
+      color: white;
+      padding: 80px 24px;
+    }
+
+    .partner-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .partner-text h2 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    .partner-text p {
+      font-size: 18px;
+      opacity: 0.9;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .partner-benefits {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .partner-benefits li {
+      font-size: 16px;
+      margin-bottom: 16px;
+      padding-left: 32px;
+      position: relative;
+    }
+
+    .partner-benefits li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .partner-image {
+      text-align: center;
+    }
+
+    .partner-icon {
+      font-size: 52px;
+      width: 104px;
+      height: 104px;
+      margin: 0 auto 24px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(240, 112, 0, 0.18);
+      border: 1px solid rgba(240, 112, 0, 0.35);
+    }
+
+    .partner-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+
+    .partner-stats {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    .partner-stats div {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 16px 10px;
+    }
+
+    .partner-stats strong {
+      display: block;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .partner-stats span {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    .partner-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .partner-card p {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 24px;
+    }
+
+    .cta-partner {
+      background: var(--primary);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+
+    .cta-partner:hover {
+      background: #D95D00;
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 1200px) {
+      .hero-wrapper {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .hero-right {
+        height: 500px;
+      }
+
+      .floating-card-1,
+      .floating-card-2,
+      .floating-card-3 {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 10px 20px;
+      }
+
+      .navbar-logo {
+        height: 54px;
+      }
+
+      .navbar-links {
+        gap: 14px;
+      }
+
+      .navbar-links a:not(.navbar-cta) {
+        display: none;
+      }
+
+      .navbar-cta {
+        padding: 9px 18px;
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 60px 24px;
+      }
+
+      .hero-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero-headline {
+        font-size: 36px;
+      }
+
+      .hero-subheadline {
+        font-size: 16px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero-button-primary,
+      .hero-button-secondary {
+        width: 100%;
+      }
+
+      .hero-right {
+        height: 400px;
+      }
+
+      .floating-card-1 {
+        bottom: 20px;
+        left: 20px;
+        width: 160px;
+      }
+
+      .floating-card-2 {
+        top: 20px;
+        right: 20px;
+        width: 160px;
+      }
+
+      .floating-card-3 {
+        bottom: 150px;
+        right: 20px;
+        width: 160px;
+      }
+
+      .section-title {
+        font-size: 32px;
+      }
+
+      .partner-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <img src="logo.png" alt="Maestro de Obras" class="navbar-logo" />
+  <nav class="navbar-links">
+    <a href="#features">Recursos</a>
+    <a href="#partner">Para Lojas</a>
+    <a href="portal-lojas.html">Portal das Lojas</a>
+    <a href="#download" class="navbar-cta">Baixar grátis</a>
+  </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-wrapper">
+    <!-- LEFT SIDE -->
+    <div class="hero-left">
+      <div class="hero-badge">
+        🚧 Gestão Inteligente para Obras
+      </div>
+
+      <h1 class="hero-headline">Controle sua obra <span style="color: var(--primary);">do início ao fim</span></h1>
+
+      <p class="hero-subheadline">Gerencie equipes, materiais, equipamentos e cronogramas em um único aplicativo.</p>
+
+      <div class="hero-buttons">
+        <button class="hero-button-primary" onclick="document.getElementById('download').scrollIntoView({ behavior: 'smooth' })">
+          Começar Gratuitamente
+        </button>
+        <button class="hero-button-secondary" onclick="document.getElementById('features').scrollIntoView({ behavior: 'smooth' })">
+          Ver Demonstração
+        </button>
+      </div>
+
+      <div class="hero-benefits">
+        <div class="hero-benefit">Controle financeiro</div>
+        <div class="hero-benefit">Gestão de equipes</div>
+        <div class="hero-benefit">Marketplace de equipamentos</div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="hero-right">
+      <div class="hero-card">
+        <img src="hero.jpg" alt="Trabalhador usando o Maestro de Obras na obra" />
+
+        <!-- Floating Card 1 -->
+        <div class="hero-floating-card floating-card-1">
+          <div class="hero-floating-card-title">📊 Gastos da Obra</div>
+          <div class="hero-floating-card-value">R$ 12.450</div>
+        </div>
+
+        <!-- Floating Card 2 -->
+        <div class="hero-floating-card floating-card-2">
+          <div class="hero-floating-card-title">👷 Equipe</div>
+          <div class="hero-floating-card-value">18 trabalhadores</div>
+        </div>
+
+        <!-- Floating Card 3 -->
+        <div class="hero-floating-card floating-card-3">
+          <div class="hero-floating-card-title">✅ Etapa Concluída</div>
+          <div class="hero-floating-card-value">Fundação finalizada</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section id="features" class="section">
+  <h2 class="section-title">Por que usar Maestro?</h2>
+  <p class="section-subtitle">Tudo que você precisa para gerenciar sua obra com eficiência</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Controle Total</h3>
+      <p>Acompanhe todas as etapas, materiais e trabalhos em tempo real. Nada fica fora de controle.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>Gestão de Equipe</h3>
+      <p>Organize sua equipe, atribua tarefas e acompanhe o progresso de cada membro.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🛠️</div>
+      <h3>Marketplace de Equipamentos</h3>
+      <p>Alugue ferramentas e equipamentos de forma rápida e prática dentro do app.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Relatórios Detalhados</h3>
+      <p>Gere relatórios completos do andamento, custos e desempenho da sua obra.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <h3>Controle Financeiro</h3>
+      <p>Acompanhe custos, materiais e despesas em um único dashboard intuitivo.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Dados Seguros</h3>
+      <p>Todos seus dados são armazenados com segurança na nuvem. Acesse de qualquer lugar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD SECTION -->
+<section id="download" class="section">
+  <div class="download-section">
+    <h2>📱 Baixe Maestro de Obras</h2>
+    <p>Disponível para Android. Comece a gerenciar sua obra agora mesmo!</p>
+
+    <div class="store-buttons">
+      <a href="https://play.google.com/store/apps/details?id=com.qrofertas.maestrodeobras"
+         class="store-badge" target="_blank" rel="noopener">
+        <img src="BOTAO-GOOGLE-PLAY.png" alt="Disponível no Google Play" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNER SECTION -->
+<section id="partner" class="partner-section">
+  <div class="partner-content">
+    <div class="partner-text">
+      <h2>Você Aluga Equipamentos?</h2>
+      <p>Conecte sua loja ao Maestro e alcance milhares de construtores que procuram pelos melhores equipamentos.</p>
+
+      <ul class="partner-benefits">
+        <li>Aumente suas vendas de aluguel</li>
+        <li>Atinja construtores qualificados</li>
+        <li>Gerencie seu catálogo facilmente</li>
+        <li>Receba pagamentos de forma segura</li>
+        <li>Sem taxa de inscrição ou mensalidade</li>
+      </ul>
+
+      <a href="portal-lojas.html" class="cta-partner">
+        ➕ Cadastre sua Loja Agora
+      </a>
+    </div>
+
+    <div class="partner-image">
+      <div class="partner-card">
+        <div class="partner-icon">🏪</div>
+        <h3>Portal de Lojas</h3>
+        <p>Gerencie seu catálogo e receba pedidos de aluguel em tempo real.</p>
+        <div class="partner-stats">
+          <div><strong>0%</strong><span>taxa de adesão</span></div>
+          <div><strong>24/7</strong><span>pedidos online</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img src="logo2.png" alt="Maestro de Obras" class="footer-logo" />
+  <p>&copy; 2026 Maestro de Obras. Todos os direitos reservados.<br/>
+    <a href="privacidade.html" style="color: var(--primary); text-decoration: none;">Política de Privacidade</a> &nbsp;|&nbsp;
+    <a href="termos.html" style="color: var(--primary); text-decoration: none;">Termos de Uso</a>
+  </p>
+</footer>
+
+</body>
+</html>
