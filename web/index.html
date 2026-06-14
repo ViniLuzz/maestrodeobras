@@ -40,7 +40,7 @@
     }
 
     .navbar-logo {
-      height: 42px;
+      height: 60px;
       width: auto;
       display: block;
     }
@@ -76,7 +76,7 @@
     }
 
     .footer-logo {
-      height: 38px;
+      height: 52px;
       width: auto;
       filter: brightness(0) invert(1);
       opacity: 0.9;
@@ -92,7 +92,7 @@
     }
 
     .hero {
-      background: #FFFFFF;
+      background: linear-gradient(180deg, #FFF9F3 0%, #FFFFFF 65%);
       color: var(--navy);
       min-height: 100vh;
       display: flex;
@@ -103,6 +103,30 @@
       padding: 80px 40px;
     }
 
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -160px;
+      right: -120px;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(240, 112, 0, 0.18) 0%, rgba(240, 112, 0, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -180px;
+      left: -140px;
+      width: 540px;
+      height: 540px;
+      background: radial-gradient(circle, rgba(26, 43, 94, 0.13) 0%, rgba(26, 43, 94, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
     .hero-wrapper {
       width: 100%;
       max-width: 1400px;
@@ -110,6 +134,8 @@
       grid-template-columns: 45% 55%;
       gap: 80px;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-left {
@@ -358,6 +384,16 @@
       text-align: center;
     }
 
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 64px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin: 18px auto 0;
+    }
+
     .section-subtitle {
       font-size: 18px;
       color: #666;
@@ -377,11 +413,12 @@
 
     .feature-card {
       background: white;
-      padding: 40px 32px;
+      padding: 36px 32px;
       border-radius: 16px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.08);
       transition: all 0.3s;
-      border: 2px solid transparent;
+      border: 2px solid #F2ECE4;
+      border-top: 4px solid var(--primary);
     }
 
     .feature-card:hover {
@@ -391,8 +428,15 @@
     }
 
     .feature-icon {
-      font-size: 48px;
-      margin-bottom: 16px;
+      font-size: 34px;
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(240, 112, 0, 0.14), rgba(240, 112, 0, 0.04));
     }
 
     .feature-card h3 {
@@ -415,6 +459,8 @@
       text-align: center;
       margin: 0 auto;
       max-width: 800px;
+      border: 1px solid #F2ECE4;
+      border-top: 5px solid var(--primary);
     }
 
     .download-section h2 {
@@ -588,7 +634,7 @@
       }
 
       .navbar-logo {
-        height: 36px;
+        height: 48px;
       }
 
       .navbar-links {
@@ -685,7 +731,7 @@
         🚧 Gestão Inteligente para Obras
       </div>
 
-      <h1 class="hero-headline">Controle sua obra do início ao fim</h1>
+      <h1 class="hero-headline">Controle sua obra <span style="color: var(--primary);">do início ao fim</span></h1>
 
       <p class="hero-subheadline">Gerencie equipes, materiais, equipamentos e cronogramas em um único aplicativo.</p>
 
