@@ -23,7 +23,15 @@
       color: #fff;
     }
     .wrap { max-width: 540px; }
-    .logo { height: 130px; width: auto; max-width: 100%; margin: 0 auto 36px; display: block; }
+    .logo-box {
+      display: inline-block;
+      background: #fff;
+      padding: 26px 40px;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+      margin-bottom: 36px;
+    }
+    .logo { height: 108px; width: auto; max-width: 100%; display: block; }
     h1 { font-size: 36px; font-weight: 800; margin-bottom: 16px; }
     .accent { color: #F07000; }
     p { font-size: 17px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); }
@@ -39,7 +47,8 @@
       font-size: 14px;
     }
     @media (max-width: 600px) {
-      .logo { height: 100px; }
+      .logo-box { padding: 20px 28px; }
+      .logo { height: 76px; }
       h1 { font-size: 28px; }
       p { font-size: 15px; }
     }
@@ -47,7 +56,9 @@
 </head>
 <body>
   <div class="wrap">
-    <img src="logo2.png" alt="Maestro de Obras" class="logo" />
+    <div class="logo-box">
+      <img src="logo.png" alt="Maestro de Obras" class="logo" />
+    </div>
     <h1>Em <span class="accent">breve</span></h1>
     <p>Estamos finalizando os últimos detalhes para transformar a gestão da sua obra.</p>
     <div class="badge">🚧 Site em manutenção</div>
