@@ -506,6 +506,21 @@
       transform: translateY(-2px);
     }
 
+    .store-badge {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .store-badge img {
+      height: 66px;
+      width: auto;
+      display: block;
+    }
+
+    .store-badge:hover {
+      transform: translateY(-2px);
+    }
+
     .partner-section {
       background: var(--navy);
       color: white;
@@ -865,14 +880,12 @@
 <section id="download" class="section">
   <div class="download-section">
     <h2>📱 Baixe Maestro de Obras</h2>
-    <p>Disponível para iOS e Android. Comece a gerenciar sua obra agora mesmo!</p>
+    <p>Disponível para Android. Comece a gerenciar sua obra agora mesmo!</p>
 
     <div class="store-buttons">
-      <a href="https://play.google.com" class="store-button" target="_blank">
-        🤖 Google Play Store
-      </a>
-      <a href="https://apps.apple.com" class="store-button" target="_blank">
-        🍎 Apple App Store
+      <a href="https://play.google.com/store/apps/details?id=com.qrofertas.maestrodeobras"
+         class="store-badge" target="_blank" rel="noopener">
+        <img src="BOTAO-GOOGLE-PLAY.png" alt="Disponível no Google Play" />
       </a>
     </div>
   </div>
